@@ -1,0 +1,10 @@
+Instructions to run
+
+1. Clone the repository
+2. Run 'npm install' to install all the dependencies
+
+Run on Android
+react-native run-Android
+
+Run on iOS
+react-native run-ios
