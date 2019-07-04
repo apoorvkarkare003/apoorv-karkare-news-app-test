@@ -5,17 +5,20 @@ import {
   View,
   FlatList,
   TouchableOpacity,
-  StyleSheet,
+  StyleSheet
 } from 'react-native';
 import { connect } from 'react-redux';
 import { TYPE_SAGA_LIST } from '../actions/Types';
 import { Constants } from '../common/Constants';
+import { getFontFamily } from '../common/Utils';
 
 let styles;
 
 class Headlines extends Component {
   static navigationOptions = {
-    title: 'Home'
+    title: 'Home',
+    headerStyle: { backgroundColor: 'black' },
+    headerTitleStyle: { fontFamily: getFontFamily(), color: 'white' }
   };
 
   componentDidMount() {
@@ -29,6 +32,9 @@ class Headlines extends Component {
           data={this.props.newsList}
           keyExtractor={(item, index) => `key${index}`}
           renderItem={({ item }) => this.showItem(item)}
+          ListHeaderComponent={
+            <Text style={styles.listheader}>Your Daily Read</Text>
+          }
         />
       </View>
     );
@@ -47,7 +53,7 @@ class Headlines extends Component {
           <View style={{ justifyContent: 'center', flex: 1 }}>
             <Text style={styles.title}>{item.title}</Text>
 
-            <Text style={styles.desc}>{item.description}</Text>
+            <Text style={styles.desc}>{item.author}</Text>
           </View>
           <Image style={styles.image} source={{ uri: item.urlToImage }} />
         </View>
@@ -79,15 +85,25 @@ styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
     flexWrap: 'wrap',
-    fontSize: 28,
+    fontSize: 18,
     fontWeight: 'bold'
   },
-  image: { width: 50, height: 50 },
+  image: { width: 80, height: 80, marginStart: 10 },
   desc: {
     flex: 1,
     flexWrap: 'wrap',
-    fontSize: 16,
-    fontWeight: 'normal'
+    fontSize: 14,
+    opacity: 0.5,
+    marginTop: 10,
+    fontWeight: 'bold'
+  },
+  listheader: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    margin: 16,
+    borderBottomWidth: 1,
+    paddingBottom: 16,
+    borderColor: '#00000050'
   }
 });
 

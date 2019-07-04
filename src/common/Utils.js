@@ -17,3 +17,7 @@ export function getFontFamily() {
     android: 'roboto'
   });
 }
+
+export function getFormattedDate(dateString) {
+  return dateString.split('T')[0].replace(/-/g, '/');
+}

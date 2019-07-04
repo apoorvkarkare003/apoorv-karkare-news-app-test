@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { Text, Image, View, ScrollView, StyleSheet } from 'react-native';
 import { Constants } from '../common/Constants';
-
+import { getFontFamily, getFormattedDate } from '../common/Utils';
 let itemDetail;
 let styles;
 
 export default class NewsDetails extends Component {
   static navigationOptions = {
-    title: 'Details'
+    title: 'Details',
+    headerTitleStyle: { fontFamily: getFontFamily() }
   };
 
   constructor(props) {
@@ -24,20 +25,12 @@ export default class NewsDetails extends Component {
       <View style={{ flex: 1 }}>
         <ScrollView contentContainerStyle={styles.scroll}>
           <Text style={styles.title}>{itemDetail.title}</Text>
-          <Text style={styles.author}>{itemDetail.author}</Text>
-          <Text
-            style={{
-              flex: 1,
-              flexWrap: 'wrap',
-              fontSize: 14
-            }}
-          >
-            {itemDetail.publishedAt}
+
+          <Text style={styles.date}>
+            <Text style={styles.author}>{itemDetail.author || ''} </Text>
+            {getFormattedDate(itemDetail.publishedAt)}
           </Text>
-          <Image
-            style={{ flex: 1, flexWrap: 'wrap', width: 500, height: 250 }}
-            source={{ uri: itemDetail.urlToImage }}
-          />
+          <Image style={styles.image} source={{ uri: itemDetail.urlToImage }} />
           <Text style={styles.content}>{itemDetail.content}</Text>
         </ScrollView>
       </View>
@@ -56,7 +49,7 @@ styles = StyleSheet.create({
     paddingEnd: 16,
     backgroundColor: 'red'
   },
-  content: { fontSize: 16 },
+  content: { fontSize: 16, marginTop: 10 },
   author: {
     fontSize: 14,
     fontWeight: 'bold'
@@ -68,5 +61,16 @@ styles = StyleSheet.create({
   },
   scroll: {
     margin: 16
+  },
+  image: {
+    flex: 1,
+    flexWrap: 'wrap',
+    width: 500,
+    height: 250,
+    marginTop: 16
+  },
+  date: {
+    fontSize: 14,
+    marginTop: 16
   }
 });
