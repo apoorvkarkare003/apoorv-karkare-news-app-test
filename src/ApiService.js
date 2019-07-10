@@ -3,8 +3,14 @@ import { checkNetworkConnection } from './common/Utils';
 let handleResponse;
 
 const Api = {
-  getNews:
-    'https://newsapi.org/v2/top-headlines?country=de&category=business&apiKey=9b64bcfe576047ba8e5bb7fd24c9e526'
+  //TODO: This can be moved to a Uitlity method.
+  getNews: query => {
+    if (typeof query === 'undefined') {
+      return 'https://newsapi.org/v2/top-headlines?country=de&category=business&apiKey=9b64bcfe576047ba8e5bb7fd24c9e526';
+    } else {
+      return `https://newsapi.org/v2/everything?q=${query}&sortBy=popularity&apiKey=9b64bcfe576047ba8e5bb7fd24c9e526`;
+    }
+  }
 };
 const HTTPMethod = {
   GET: 'GET'

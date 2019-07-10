@@ -11,23 +11,43 @@ import { connect } from 'react-redux';
 import { TYPE_SAGA_LIST } from '../actions/Types';
 import { Constants } from '../common/Constants';
 import { getFontFamily } from '../common/Utils';
+import { Toolbar } from 'react-native-material-ui';
 
 let styles;
+let queryText;
 
 class Headlines extends Component {
-  static navigationOptions = {
-    title: 'Home',
-    headerStyle: { backgroundColor: 'black' },
-    headerTitleStyle: { fontFamily: getFontFamily(), color: 'white' }
-  };
 
   componentDidMount() {
     this.props.getNews();
   }
 
+  searchNews = () => {
+    this.props.getNews(queryText);
+  };
+
+  //TODO: This method definition is not proper.
+  setQuery = text => {
+    queryText = text;
+    //TODO Should be moved to searchNews.
+    if(text===''){
+      this.props.getNews();
+    }
+  };
+
   render() {
     return (
       <View style={{ flex: 1 }}>
+        <Toolbar
+          centerElement='Home'
+          searchable={{
+            autoFocus: true,
+            placeholder: 'Search',
+            onSubmitEditing: () => this.searchNews(),//TODO: New instance creation everytime is costly.
+            onChangeText: text => this.setQuery(text),//Should write a seperate method for this
+            onSearchCloseRequested: () => this.setQuery('')
+          }}
+        />
         <FlatList
           data={this.props.newsList}
           keyExtractor={(item, index) => `key${index}`}
@@ -64,7 +84,7 @@ class Headlines extends Component {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getNews: () => dispatch({ type: TYPE_SAGA_LIST })
+    getNews: data => dispatch({ type: TYPE_SAGA_LIST, payload: { data } })
   };
 };
 

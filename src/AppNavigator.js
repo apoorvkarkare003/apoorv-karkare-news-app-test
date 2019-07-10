@@ -10,6 +10,7 @@ const configRouteMap = {
 const AppNavigator = createStackNavigator(configRouteMap, {
   initialRouteName: 'HeadLines',
   defaultNavigationOptions: {
+    header:null,
     gestureEnabled: false,
   }
 });

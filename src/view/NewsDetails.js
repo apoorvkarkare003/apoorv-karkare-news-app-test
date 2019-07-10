@@ -6,10 +6,7 @@ let itemDetail;
 let styles;
 
 export default class NewsDetails extends Component {
-  static navigationOptions = {
-    title: 'Details',
-    headerTitleStyle: { fontFamily: getFontFamily() }
-  };
+  //TODO Put a toolbar here
 
   constructor(props) {
     super(props);
